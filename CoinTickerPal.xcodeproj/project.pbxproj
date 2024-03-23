@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		10195D9E2BACD25800127465 /* CoinsListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195D9D2BACD25800127465 /* CoinsListCoordinator.swift */; };
+		10195DA02BACD4A600127465 /* CoinsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195D9F2BACD4A600127465 /* CoinsListViewController.swift */; };
+		10195DA22BACD59B00127465 /* CoinsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DA12BACD59B00127465 /* CoinsListViewModel.swift */; };
+		10195DA62BACD8B900127465 /* ShimmerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DA52BACD8B900127465 /* ShimmerTableViewCell.swift */; };
+		10195DA82BACD8CC00127465 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DA72BACD8CC00127465 /* ShimmerView.swift */; };
+		10195DAB2BACD9B700127465 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DAA2BACD9B700127465 /* UITableView+Extension.swift */; };
+		10195DAD2BACDF3900127465 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DAC2BACDF3900127465 /* UIView+Extension.swift */; };
+		10195DB02BAE28F400127465 /* CoinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DAE2BAE28F400127465 /* CoinTableViewCell.swift */; };
+		10195DB22BAE46CF00127465 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DB12BAE46CF00127465 /* PaddingLabel.swift */; };
+		10195DB42BAE46EA00127465 /* UIEdgeInsets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */; };
 		10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */; };
 		10B027072BACBF54006EAF9A /* CoinTickerPalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */; };
 		10B027092BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */; };
@@ -34,6 +44,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		10195D9D2BACD25800127465 /* CoinsListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListCoordinator.swift; sourceTree = "<group>"; };
+		10195D9F2BACD4A600127465 /* CoinsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListViewController.swift; sourceTree = "<group>"; };
+		10195DA12BACD59B00127465 /* CoinsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListViewModel.swift; sourceTree = "<group>"; };
+		10195DA52BACD8B900127465 /* ShimmerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerTableViewCell.swift; sourceTree = "<group>"; };
+		10195DA72BACD8CC00127465 /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
+		10195DAA2BACD9B700127465 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		10195DAC2BACDF3900127465 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		10195DAE2BAE28F400127465 /* CoinTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinTableViewCell.swift; sourceTree = "<group>"; };
+		10195DB12BAE46CF00127465 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extension.swift"; sourceTree = "<group>"; };
 		10B026E22BACBF51006EAF9A /* CoinTickerPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinTickerPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026F82BACBF54006EAF9A /* CoinTickerPalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalTests.swift; sourceTree = "<group>"; };
@@ -72,6 +92,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10195D9C2BACD24900127465 /* CoinsList */ = {
+			isa = PBXGroup;
+			children = (
+				10195D9D2BACD25800127465 /* CoinsListCoordinator.swift */,
+				10195D9F2BACD4A600127465 /* CoinsListViewController.swift */,
+				10195DA12BACD59B00127465 /* CoinsListViewModel.swift */,
+			);
+			path = CoinsList;
+			sourceTree = "<group>";
+		};
+		10195DA92BACD99F00127465 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				10195DAA2BACD9B700127465 /* UITableView+Extension.swift */,
+				10195DAC2BACDF3900127465 /* UIView+Extension.swift */,
+				10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		10B026D92BACBF51006EAF9A = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +177,7 @@
 		10B23A692BACC71400B71064 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				10195D9C2BACD24900127465 /* CoinsList */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -151,6 +192,10 @@
 		10B23A6B2BACC71400B71064 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				10195DAE2BAE28F400127465 /* CoinTableViewCell.swift */,
+				10195DB12BAE46CF00127465 /* PaddingLabel.swift */,
+				10195DA72BACD8CC00127465 /* ShimmerView.swift */,
+				10195DA52BACD8B900127465 /* ShimmerTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -165,6 +210,7 @@
 				10B23A692BACC71400B71064 /* Scenes */,
 				10B23A6A2BACC71400B71064 /* Services */,
 				10B23A6B2BACC71400B71064 /* Views */,
+				10195DA92BACD99F00127465 /* Utilities */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -308,8 +354,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10195DB42BAE46EA00127465 /* UIEdgeInsets+Extension.swift in Sources */,
 				10B23A732BACC71400B71064 /* AppDelegate.swift in Sources */,
+				10195DA22BACD59B00127465 /* CoinsListViewModel.swift in Sources */,
+				10195DAB2BACD9B700127465 /* UITableView+Extension.swift in Sources */,
 				10B23A742BACC71400B71064 /* SceneDelegate.swift in Sources */,
+				10195DB02BAE28F400127465 /* CoinTableViewCell.swift in Sources */,
+				10195DA82BACD8CC00127465 /* ShimmerView.swift in Sources */,
+				10195D9E2BACD25800127465 /* CoinsListCoordinator.swift in Sources */,
+				10195DA02BACD4A600127465 /* CoinsListViewController.swift in Sources */,
+				10195DAD2BACDF3900127465 /* UIView+Extension.swift in Sources */,
+				10195DA62BACD8B900127465 /* ShimmerTableViewCell.swift in Sources */,
+				10195DB22BAE46CF00127465 /* PaddingLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
