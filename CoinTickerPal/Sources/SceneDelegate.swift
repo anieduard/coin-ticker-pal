@@ -18,7 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let coordinator = CoinsListCoordinator()
+        let serviceCollection = ServiceCollection(networkClient: NetworkClient())
+        let coinsService = serviceCollection.resolve(type: CoinsService.self)
+        let imageService = serviceCollection.resolve(type: ImageService.self)
+        let coordinator = CoinsListCoordinator(coinsService: coinsService, imageService: imageService)
         window?.rootViewController = coordinator
 
         window?.makeKeyAndVisible()

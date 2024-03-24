@@ -5,19 +5,20 @@
 //  Created by Eduard Ani on 21.03.2024.
 //
 
-typealias Coin = String
-
 import Foundation
 import UIKit
 
+@MainActor
 protocol CoinsListViewModelDelegate: AnyObject {
     func didFailLoadingCoins(with error: Error)
 }
 
+@MainActor
 protocol CoinsListViewModelProtocol: AnyObject {
     var dataSourceSnapshot: CoinsListViewModel.DataSourceSnapshot { get }
 
     func loadCoins() async throws
+    func loadImage(for url: URL) async -> UIImage?
 }
 
 final class CoinsListViewModel: CoinsListViewModelProtocol {
@@ -35,9 +36,13 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     private(set) var dataSourceSnapshot: DataSourceSnapshot
 
+    private let coinsService: CoinsServiceProtocol
+    private let imageService: ImageServiceProtocol
     private unowned let delegate: CoinsListViewModelDelegate
 
-    init(delegate: CoinsListViewModelDelegate) {
+    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol, delegate: CoinsListViewModelDelegate) {
+        self.coinsService = coinsService
+        self.imageService = imageService
         self.delegate = delegate
 
         dataSourceSnapshot = DataSourceSnapshot()
@@ -47,9 +52,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     func loadCoins() async throws {
         do {
-            try await Task.sleep(for: .seconds(2))
-
-            let coins = ["BTC", "ETH", "SOL", "BORG", "JUP"]
+            let coins = try await coinsService.coins
 
             dataSourceSnapshot.deleteSections([.loading])
             dataSourceSnapshot.deleteSections([.coins])
@@ -59,5 +62,9 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
             delegate.didFailLoadingCoins(with: error)
             throw error
         }
+    }
+
+    func loadImage(for url: URL) async -> UIImage? {
+        try? await imageService.image(for: url)
     }
 }

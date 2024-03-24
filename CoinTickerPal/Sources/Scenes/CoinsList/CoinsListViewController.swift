@@ -20,14 +20,21 @@ final class CoinsListViewController: UIViewController {
                 return cell
             case .coin(let coin):
                 let cell: CoinTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-                
-                cell.item = .init(
-                    image: .init(),
-                    name: "Tether USD",
-                    price: "USDT",
-                    earnYield: Bool.random(),
-                    symbol: "$0.8615",
-                    priceChange: .higher("+4.55%")
+
+                let task = Task<UIImage?, Never> {
+//                    if Bool.random() { return nil }
+//                    try? await Task.sleep(nanoseconds: UInt64(Int.random(in: 0...3) * 1_000_000_000))
+                    return await self.viewModel.loadImage(for: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")!)
+                }
+
+                cell.reuseClosure = {
+                    task.cancel()
+                }
+
+                cell.item = .from(
+                    coin,
+                    image: { await task.value },
+                    earnYield: Bool.random()
                 )
 
                 return cell
@@ -78,8 +85,25 @@ final class CoinsListViewController: UIViewController {
     private func initView() {
         tableView.backgroundColor = .systemGroupedBackground
         tableView.dataSource = dataSource
+        tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.refreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action: #selector(refreshControlValueChanged), for: .valueChanged)
+            return refreshControl
+        }()
         tableView.register(ShimmerTableViewCell.self)
         tableView.register(CoinTableViewCell.self)
+    }
+
+    @objc private func refreshControlValueChanged() {
+        Task {
+            do {
+                try await viewModel.loadCoins()
+
+                tableView.refreshControl?.endRefreshing()
+                dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+            }
+        }
     }
 }

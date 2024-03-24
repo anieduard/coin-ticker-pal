@@ -13,13 +13,16 @@ final class CoinsListCoordinator: UIViewController {
         case error(Error)
     }
 
+    private let coinsService: CoinsServiceProtocol
+    private let imageService: ImageServiceProtocol
+
     private var state: State? {
         didSet {
             let rootViewController: UIViewController
 
             switch (oldValue, state) {
             case (.none, .coins), (.error, .coins):
-                let viewModel = CoinsListViewModel(delegate: self)
+                let viewModel = CoinsListViewModel(coinsService: coinsService, imageService: imageService, delegate: self)
                 rootViewController = CoinsListViewController(viewModel: viewModel)
             case (.coins, .error):
                 rootViewController = .init()
@@ -45,7 +48,9 @@ final class CoinsListCoordinator: UIViewController {
         }
     }
 
-    init() {
+    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol) {
+        self.coinsService = coinsService
+        self.imageService = imageService
         super.init(nibName: nil, bundle: nil)
     }
 

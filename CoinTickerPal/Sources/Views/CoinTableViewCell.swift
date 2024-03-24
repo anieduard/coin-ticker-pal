@@ -7,12 +7,64 @@
 
 import UIKit
 
+final class ShimmerImageView: UIImageView {
+    override var image: UIImage? {
+        didSet {
+            backgroundColor = image == nil ? .systemGray3 : .clear
+            shimmerView.removeFromSuperview()
+        }
+    }
+
+    private lazy var shimmerView: ShimmerView = {
+        let shimmerView = ShimmerView()
+        shimmerView.translatesAutoresizingMaskIntoConstraints = false
+        shimmerView.backgroundColor = .systemGray3
+        return shimmerView
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        initView(hasImage: false)
+    }
+
+    override init(image: UIImage?) {
+        super.init(image: image)
+        initView(hasImage: image != nil)
+    }
+
+    override init(image: UIImage?, highlightedImage: UIImage?) {
+        super.init(image: image, highlightedImage: highlightedImage)
+        initView(hasImage: image != nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func initView(hasImage: Bool) {
+        guard !hasImage else { return }
+
+        addSubview(shimmerView)
+
+        NSLayoutConstraint.activate([
+            shimmerView.topAnchor.constraint(equalTo: topAnchor),
+            shimmerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            shimmerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            shimmerView.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+    }
+}
+
 final class CoinTableViewCell: UITableViewCell {
     var item: Item? {
         didSet {
-            // Resize images so we don't get huge image sizes that would affect scrolling performance.
-            avatarImageView.image = item?.image.resize(to: CGSize(width: .imageSize, height: .imageSize))
-            avatarImageView.backgroundColor = item?.image == nil ? .systemGray : .clear
+            Task {
+                let image = await item?.image()
+
+                // Resize images so we don't get huge image sizes that would affect scrolling performance.
+                avatarImageView.image = image?.resize(to: CGSize(width: .imageSize, height: .imageSize))
+            }
 
             nameLabel.text = item?.name
             priceLabel.text = item?.price
@@ -49,9 +101,8 @@ final class CoinTableViewCell: UITableViewCell {
         return stackView
     }()
 
-    private lazy var avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .systemGray3
+    private lazy var avatarImageView: ShimmerImageView = {
+        let imageView = ShimmerImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -108,7 +159,7 @@ final class CoinTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: UIFont.smallSystemFontSize)
         label.layer.cornerRadius = 4
         label.layer.masksToBounds = true
-        label.insets = .all(2)
+        label.insets = UIEdgeInsets(horizontal: 4, vertical: 2)
         return label
     }()
 
@@ -195,34 +246,43 @@ final class CoinTableViewCell: UITableViewCell {
 
 extension CoinTableViewCell {
     struct Item {
-        enum PriceChange {
-            case lower(String), neutral(String), higher(String)
+        struct PriceChange {
+            let value: String
+            let color: UIColor
 
-            var value: String {
-                switch self {
-                case .lower(let value), .neutral(let value), .higher(let value):
-                    return value
-                }
-            }
+            init(value: Double) {
+                self.value = value.formatted(.percent.sign(strategy: .always(includingZero: false)).precision(.fractionLength(2)))
 
-            var color: UIColor {
-                switch self {
-                case .lower:
-                    return .systemRed
-                case .neutral:
-                    return .systemGray
-                case .higher:
-                    return .systemGreen
+                if value > 0 {
+                    self.color = .systemGreen
+                } else if value < 0 {
+                    self.color = .systemRed
+                } else {
+                    self.color = .systemGray
                 }
             }
         }
 
-        let image: UIImage
+        let image: () async -> UIImage?
         let name: String
         let price: String
         let earnYield: Bool
         let symbol: String
         let priceChange: PriceChange
+
+        static func from(_ coin: Coin, image: @escaping () async -> UIImage?, earnYield: Bool) -> Self {
+            let price = coin.price.formatted(.currency(code: "USD").presentation(.narrow))
+            let priceChange = PriceChange(value: coin.priceChange)
+
+            return Self(
+                image: image,
+                name: coin.name,
+                price: price,
+                earnYield: earnYield,
+                symbol: coin.symbol,
+                priceChange: priceChange
+            )
+        }
     }
 }
 
