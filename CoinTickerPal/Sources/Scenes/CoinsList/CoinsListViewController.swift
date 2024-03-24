@@ -8,6 +8,10 @@
 import UIKit
 
 final class CoinsListViewController: UIViewController {
+    enum RefreshControl {
+        case active, none
+    }
+
     private let viewModel: CoinsListViewModelProtocol
 
     private lazy var tableView = UITableView()
@@ -46,6 +50,25 @@ final class CoinsListViewController: UIViewController {
         return dataSource
     }()
 
+    private lazy var searchController = UISearchController()
+
+    private var refreshControl: RefreshControl = .none {
+        didSet {
+            tableView.refreshControl?.endRefreshing()
+
+            switch refreshControl {
+            case .active:
+                tableView.refreshControl = {
+                    let refreshControl = UIRefreshControl()
+                    refreshControl.addTarget(self, action: #selector(refreshControlValueChanged), for: .valueChanged)
+                    return refreshControl
+                }()
+            case .none:
+                tableView.refreshControl = nil
+            }
+        }
+    }
+
     init(viewModel: CoinsListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -83,17 +106,27 @@ final class CoinsListViewController: UIViewController {
     }
 
     private func initView() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
+
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Coins"
+
         tableView.backgroundColor = .systemGroupedBackground
         tableView.dataSource = dataSource
         tableView.delegate = self
         tableView.separatorStyle = .none
-        tableView.refreshControl = {
-            let refreshControl = UIRefreshControl()
-            refreshControl.addTarget(self, action: #selector(refreshControlValueChanged), for: .valueChanged)
-            return refreshControl
-        }()
+        tableView.keyboardDismissMode = .interactive
         tableView.register(ShimmerTableViewCell.self)
         tableView.register(CoinTableViewCell.self)
+
+        refreshControl = .active
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     @objc private func refreshControlValueChanged() {
@@ -105,5 +138,32 @@ final class CoinsListViewController: UIViewController {
                 dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
             }
         }
+    }
+
+    @objc private func keyboardWillShow(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        tableView.contentInset.bottom = keyboardViewEndFrame.height - view.safeAreaInsets.bottom
+        tableView.scrollIndicatorInsets = tableView.contentInset
+    }
+
+    @objc private func keyboardWillHide(notification: Notification) {
+        tableView.contentInset = .zero
+        tableView.scrollIndicatorInsets = tableView.contentInset
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension CoinsListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        refreshControl = searchController.isActive ? .none : .active
+
+        viewModel.searchCoins(text: searchController.searchBar.text)
+
+        dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
     }
 }

@@ -19,6 +19,8 @@ protocol CoinsListViewModelProtocol: AnyObject {
 
     func loadCoins() async throws
     func loadImage(for url: URL) async -> UIImage?
+
+    func searchCoins(text: String?)
 }
 
 final class CoinsListViewModel: CoinsListViewModelProtocol {
@@ -34,6 +36,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
         case coins
     }
 
+    private var coins: [Coin] = []
     private(set) var dataSourceSnapshot: DataSourceSnapshot
 
     private let coinsService: CoinsServiceProtocol
@@ -52,7 +55,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     func loadCoins() async throws {
         do {
-            let coins = try await coinsService.coins
+            coins = try await coinsService.coins
 
             dataSourceSnapshot.deleteSections([.loading])
             dataSourceSnapshot.deleteSections([.coins])
@@ -66,5 +69,21 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     func loadImage(for url: URL) async -> UIImage? {
         try? await imageService.image(for: url)
+    }
+
+    func searchCoins(text: String?) {
+        let coins: [Coin]
+
+        if let text, !text.isEmpty {
+            coins = self.coins.filter { coin in
+                coin.name.lowercased().contains(text.lowercased()) || coin.symbol.lowercased().contains(text.lowercased())
+            }
+        } else {
+            coins = self.coins
+        }
+
+        dataSourceSnapshot.deleteSections([.coins])
+        dataSourceSnapshot.appendSections([.coins])
+        dataSourceSnapshot.appendItems(coins.map { .coin($0) }, toSection: .coins)
     }
 }
