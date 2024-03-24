@@ -18,7 +18,7 @@ final class CoinsListViewController: UIViewController {
 
     private lazy var dataSource: UITableViewDiffableDataSource<CoinsListViewModel.Section, CoinsListViewModel.Section.Item> = {
         let dataSource = UITableViewDiffableDataSource<CoinsListViewModel.Section, CoinsListViewModel.Section.Item>(tableView: tableView) { tableView, indexPath, item in
-            switch item {
+            switch item.type {
             case .loading:
                 let cell: ShimmerTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                 return cell
@@ -100,7 +100,9 @@ final class CoinsListViewController: UIViewController {
                 try await viewModel.loadCoins()
                 tableView.isScrollEnabled = true
 
-                dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+                dataSource.apply(viewModel.dataSourceSnapshot) { [weak self] in
+                    self?.startPolling()
+                }
             }
         }
     }
@@ -117,7 +119,6 @@ final class CoinsListViewController: UIViewController {
 
         tableView.backgroundColor = .systemGroupedBackground
         tableView.dataSource = dataSource
-        tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.keyboardDismissMode = .interactive
         tableView.register(ShimmerTableViewCell.self)
@@ -127,6 +128,15 @@ final class CoinsListViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    private func startPolling() {
+        Task {
+            // Start polling and update data every time.
+            for await _ in viewModel.startPolling() {
+                dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+            }
+        }
     }
 
     @objc private func refreshControlValueChanged() {

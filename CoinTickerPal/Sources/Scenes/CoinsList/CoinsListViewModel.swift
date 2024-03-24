@@ -22,28 +22,22 @@ protocol CoinsListViewModelProtocol: AnyObject {
     func loadCoins() async throws
     func loadImage(for url: URL) async -> UIImage?
 
+    func startPolling() -> AsyncStream<Void>
+
     func searchCoins(text: String?)
 }
 
 final class CoinsListViewModel: CoinsListViewModelProtocol {
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<Section, Section.Item>
 
-    enum Section: Hashable {
-        enum Item: Hashable {
-            case loading(Int)
-            case coin(Coin)
-        }
-
-        case loading
-        case coins
-    }
-
-    private var coins: [Coin] = []
-    private(set) var dataSourceSnapshot: DataSourceSnapshot
-
     private let coinsService: CoinsServiceProtocol
     private let imageService: ImageServiceProtocol
     private unowned let delegate: CoinsListViewModelDelegate
+
+    private let coinsPollingStream: AsyncPollingStream<[Coin]>
+
+    private(set) var dataSourceSnapshot: DataSourceSnapshot
+    private var coins: [Coin] = []
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -52,9 +46,11 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
         self.imageService = imageService
         self.delegate = delegate
 
+        coinsPollingStream = AsyncPollingStream { try await coinsService.coins }
+
         dataSourceSnapshot = DataSourceSnapshot()
-        dataSourceSnapshot.appendSections([.loading])
-        dataSourceSnapshot.appendItems((0..<15).map { .loading($0) }, toSection: .loading)
+        dataSourceSnapshot.appendSections([.coins])
+        dataSourceSnapshot.appendItems((0..<15).map { _ in .loading }, toSection: .coins)
 
         reachabilityService.startMonitoring()
         reachabilityService.hasActiveNetwork
@@ -71,10 +67,11 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
         do {
             coins = try await coinsService.coins
 
-            dataSourceSnapshot.deleteSections([.loading])
             dataSourceSnapshot.deleteSections([.coins])
             dataSourceSnapshot.appendSections([.coins])
-            dataSourceSnapshot.appendItems(coins.map { .coin($0) }, toSection: .coins)
+
+            let items: [Section.Item] = coins.map { .coin($0) }
+            dataSourceSnapshot.appendItems(items, toSection: .coins)
         } catch {
             delegate.didFailLoadingCoins(with: error, onRetry: !coins.isEmpty)
             throw error
@@ -83,6 +80,32 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     func loadImage(for url: URL) async -> UIImage? {
         try? await imageService.image(for: url)
+    }
+
+    func startPolling() -> AsyncStream<Void> {
+        return AsyncStream<Void> { continuation in
+            Task {
+                for await result in coinsPollingStream.start() {
+                    switch result {
+                    case .success(let coins):
+                        for coin in coins {
+                            guard let index = dataSourceSnapshot.itemIdentifiers.firstIndex(where: { itemIdentifier in
+                                guard case .coin(let coin) = itemIdentifier.type else { return false }
+                                return coin.symbol == coin.symbol
+                            }) else { continue }
+
+                            dataSourceSnapshot.itemIdentifiers[index].type = .coin(coin)
+                        }
+
+                        dataSourceSnapshot.reloadItems(dataSourceSnapshot.itemIdentifiers)
+                    case .failure(let error):
+                        print("Received error: \(error)")
+                    }
+                    continuation.yield(())
+                }
+                continuation.finish()
+            }
+        }
     }
 
     func searchCoins(text: String?) {
@@ -98,6 +121,47 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
         dataSourceSnapshot.deleteSections([.coins])
         dataSourceSnapshot.appendSections([.coins])
-        dataSourceSnapshot.appendItems(coins.map { .coin($0) }, toSection: .coins)
+
+        let items: [Section.Item] = coins.map { .coin($0) }
+        dataSourceSnapshot.appendItems(items, toSection: .coins)
+    }
+}
+
+extension CoinsListViewModel {
+    enum Section: Hashable {
+        case coins
+    }
+}
+
+extension CoinsListViewModel.Section {
+    class Item: Hashable {
+        let id = UUID()
+        var type: `Type`
+
+        init(type: `Type`) {
+            self.type = type
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+
+        static func == (lhs: Item, rhs: Item) -> Bool {
+            lhs.id == rhs.id
+        }
+    }
+}
+
+extension CoinsListViewModel.Section.Item {
+    typealias Item = CoinsListViewModel.Section.Item
+
+    enum `Type` {
+        case loading, coin(Coin)
+    }
+
+    static var loading: Item { Item(type: .loading) }
+
+    static func coin(_ coin: Coin) -> Item {
+        Item(type: .coin(coin))
     }
 }

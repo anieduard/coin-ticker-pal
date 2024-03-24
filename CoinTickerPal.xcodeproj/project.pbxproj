@@ -27,6 +27,7 @@
 		10195DCB2BB0178800127465 /* ShimmerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCA2BB0178800127465 /* ShimmerImageView.swift */; };
 		10195DCD2BB0416F00127465 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCC2BB0416F00127465 /* ReachabilityService.swift */; };
 		10195DCF2BB0614B00127465 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCE2BB0614B00127465 /* Toast.swift */; };
+		10A2DE492BB0DFF2002F1E08 /* AsyncPollingStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */; };
 		10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */; };
 		10B027072BACBF54006EAF9A /* CoinTickerPalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */; };
 		10B027092BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */; };
@@ -74,6 +75,7 @@
 		10195DCA2BB0178800127465 /* ShimmerImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerImageView.swift; sourceTree = "<group>"; };
 		10195DCC2BB0416F00127465 /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		10195DCE2BB0614B00127465 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncPollingStream.swift; sourceTree = "<group>"; };
 		10B026E22BACBF51006EAF9A /* CoinTickerPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinTickerPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026F82BACBF54006EAF9A /* CoinTickerPalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalTests.swift; sourceTree = "<group>"; };
@@ -122,14 +124,15 @@
 			path = CoinsList;
 			sourceTree = "<group>";
 		};
-		10195DA92BACD99F00127465 /* Utilities */ = {
+		10195DA92BACD99F00127465 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */,
 				10195DAA2BACD9B700127465 /* UITableView+Extension.swift */,
 				10195DAC2BACDF3900127465 /* UIView+Extension.swift */,
 				10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */,
 			);
-			path = Utilities;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		10195DB82BAECB8900127465 /* Models */ = {
@@ -155,6 +158,7 @@
 		10195DBA2BAECB8900127465 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
+				10195DBE2BAECC1C00127465 /* ServiceCollection.swift */,
 				10195DB82BAECB8900127465 /* Models */,
 				10195DBB2BAECBB800127465 /* Networking */,
 				10195DB92BAECB8900127465 /* Services */,
@@ -166,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				10195DBC2BAECBD700127465 /* NetworkingClient.swift */,
-				10195DBE2BAECC1C00127465 /* ServiceCollection.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -256,7 +259,7 @@
 				10B23A682BACC71400B71064 /* Resources */,
 				10B23A692BACC71400B71064 /* Scenes */,
 				10B23A6B2BACC71400B71064 /* Views */,
-				10195DA92BACD99F00127465 /* Utilities */,
+				10195DA92BACD99F00127465 /* Helpers */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				10195D9E2BACD25800127465 /* CoinsListCoordinator.swift in Sources */,
 				10195DCD2BB0416F00127465 /* ReachabilityService.swift in Sources */,
 				10195DBF2BAECC1C00127465 /* ServiceCollection.swift in Sources */,
+				10A2DE492BB0DFF2002F1E08 /* AsyncPollingStream.swift in Sources */,
 				10195DA02BACD4A600127465 /* CoinsListViewController.swift in Sources */,
 				10195DCB2BB0178800127465 /* ShimmerImageView.swift in Sources */,
 				10195DAD2BACDF3900127465 /* UIView+Extension.swift in Sources */,
