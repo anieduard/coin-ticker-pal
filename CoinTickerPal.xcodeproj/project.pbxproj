@@ -24,6 +24,7 @@
 		10195DC52BAF415A00127465 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DC42BAF415A00127465 /* Coin.swift */; };
 		10195DC72BAF70CC00127465 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DC62BAF70CC00127465 /* ImageService.swift */; };
 		10195DC92BAF710200127465 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DC82BAF710200127465 /* ImageCache.swift */; };
+		10195DCB2BB0178800127465 /* ShimmerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCA2BB0178800127465 /* ShimmerImageView.swift */; };
 		10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */; };
 		10B027072BACBF54006EAF9A /* CoinTickerPalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */; };
 		10B027092BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */; };
@@ -68,6 +69,7 @@
 		10195DC42BAF415A00127465 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		10195DC62BAF70CC00127465 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		10195DC82BAF710200127465 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		10195DCA2BB0178800127465 /* ShimmerImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerImageView.swift; sourceTree = "<group>"; };
 		10B026E22BACBF51006EAF9A /* CoinTickerPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinTickerPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026F82BACBF54006EAF9A /* CoinTickerPalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalTests.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				10195DAE2BAE28F400127465 /* CoinTableViewCell.swift */,
 				10195DB12BAE46CF00127465 /* PaddingLabel.swift */,
 				10195DA72BACD8CC00127465 /* ShimmerView.swift */,
+				10195DCA2BB0178800127465 /* ShimmerImageView.swift */,
 				10195DA52BACD8B900127465 /* ShimmerTableViewCell.swift */,
 			);
 			path = Views;
@@ -407,6 +410,7 @@
 				10195D9E2BACD25800127465 /* CoinsListCoordinator.swift in Sources */,
 				10195DBF2BAECC1C00127465 /* ServiceCollection.swift in Sources */,
 				10195DA02BACD4A600127465 /* CoinsListViewController.swift in Sources */,
+				10195DCB2BB0178800127465 /* ShimmerImageView.swift in Sources */,
 				10195DAD2BACDF3900127465 /* UIView+Extension.swift in Sources */,
 				10195DA62BACD8B900127465 /* ShimmerTableViewCell.swift in Sources */,
 				10195DB22BAE46CF00127465 /* PaddingLabel.swift in Sources */,
