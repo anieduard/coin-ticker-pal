@@ -5,12 +5,14 @@
 //  Created by Eduard Ani on 21.03.2024.
 //
 
+import Combine
 import Foundation
 import UIKit
 
 @MainActor
 protocol CoinsListViewModelDelegate: AnyObject {
-    func didFailLoadingCoins(with error: Error)
+    func didFailLoadingCoins(with error: Error, onRetry: Bool)
+    func showNoInternetConnectionToast()
 }
 
 @MainActor
@@ -43,7 +45,9 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
     private let imageService: ImageServiceProtocol
     private unowned let delegate: CoinsListViewModelDelegate
 
-    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol, delegate: CoinsListViewModelDelegate) {
+    private var cancellables: Set<AnyCancellable> = []
+
+    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol, reachabilityService: ReachabilityServiceProtocol, delegate: CoinsListViewModelDelegate) {
         self.coinsService = coinsService
         self.imageService = imageService
         self.delegate = delegate
@@ -51,6 +55,16 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
         dataSourceSnapshot = DataSourceSnapshot()
         dataSourceSnapshot.appendSections([.loading])
         dataSourceSnapshot.appendItems((0..<15).map { .loading($0) }, toSection: .loading)
+
+        reachabilityService.startMonitoring()
+        reachabilityService.hasActiveNetwork
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { hasActiveNetwork in
+                guard !hasActiveNetwork else { return }
+                delegate.showNoInternetConnectionToast()
+            }
+            .store(in: &cancellables)
     }
 
     func loadCoins() async throws {
@@ -62,7 +76,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
             dataSourceSnapshot.appendSections([.coins])
             dataSourceSnapshot.appendItems(coins.map { .coin($0) }, toSection: .coins)
         } catch {
-            delegate.didFailLoadingCoins(with: error)
+            delegate.didFailLoadingCoins(with: error, onRetry: !coins.isEmpty)
             throw error
         }
     }

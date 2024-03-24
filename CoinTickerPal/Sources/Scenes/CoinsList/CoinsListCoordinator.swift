@@ -15,6 +15,7 @@ final class CoinsListCoordinator: UIViewController {
 
     private let coinsService: CoinsServiceProtocol
     private let imageService: ImageServiceProtocol
+    private let reachabilityService: ReachabilityServiceProtocol
 
     private var state: State? {
         didSet {
@@ -22,7 +23,7 @@ final class CoinsListCoordinator: UIViewController {
 
             switch (oldValue, state) {
             case (.none, .coins), (.error, .coins):
-                let viewModel = CoinsListViewModel(coinsService: coinsService, imageService: imageService, delegate: self)
+                let viewModel = CoinsListViewModel(coinsService: coinsService, imageService: imageService, reachabilityService: reachabilityService, delegate: self)
                 rootViewController = CoinsListViewController(viewModel: viewModel)
             case (.coins, .error):
                 rootViewController = .init()
@@ -48,9 +49,10 @@ final class CoinsListCoordinator: UIViewController {
         }
     }
 
-    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol) {
+    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol, reachabilityService: ReachabilityServiceProtocol) {
         self.coinsService = coinsService
         self.imageService = imageService
+        self.reachabilityService = reachabilityService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -69,7 +71,15 @@ final class CoinsListCoordinator: UIViewController {
 // MARK: - CoinsListViewModelDelegate
 
 extension CoinsListCoordinator: CoinsListViewModelDelegate {
-    func didFailLoadingCoins(with error: Error) {
-        state = .error(error)
+    func didFailLoadingCoins(with error: Error, onRetry: Bool) {
+        if onRetry {
+            Toast.presentError("There was an error when trying to refresh.")
+        } else {
+            state = .error(error)
+        }
+    }
+
+    func showNoInternetConnectionToast() {
+        Toast.presentError("No internet connection available. Please connect to the internet.")
     }
 }

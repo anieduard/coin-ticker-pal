@@ -136,6 +136,8 @@ final class CoinsListViewController: UIViewController {
 
                 tableView.refreshControl?.endRefreshing()
                 dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+            } catch {
+                tableView.refreshControl?.endRefreshing()
             }
         }
     }

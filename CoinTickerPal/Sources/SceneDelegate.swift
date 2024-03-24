@@ -18,10 +18,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let serviceCollection = ServiceCollection(networkClient: NetworkClient())
-        let coinsService = serviceCollection.resolve(type: CoinsService.self)
-        let imageService = serviceCollection.resolve(type: ImageService.self)
-        let coordinator = CoinsListCoordinator(coinsService: coinsService, imageService: imageService)
+        let networkClient = NetworkClient()
+        let serviceCollection = ServiceCollection()
+            .register { CoinsService(networkClient: networkClient) }
+            .register { ImageService(networkClient: networkClient, imageCache: ImageCache()) }
+            .register { ReachabilityService() }
+
+        let coinsService = serviceCollection.resolve(CoinsService.self)
+        let imageService = serviceCollection.resolve(ImageService.self)
+        let reachabilityService = serviceCollection.resolve(ReachabilityService.self)
+
+        let coordinator = CoinsListCoordinator(coinsService: coinsService, imageService: imageService, reachabilityService: reachabilityService)
         window?.rootViewController = coordinator
 
         window?.makeKeyAndVisible()

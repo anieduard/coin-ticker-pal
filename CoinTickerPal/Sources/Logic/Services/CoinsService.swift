@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol CoinsServiceProtocol: Service {
+protocol CoinsServiceProtocol: APIService {
     var coins: [Coin] { get async throws }
 }
 
 final class CoinsService: CoinsServiceProtocol {
-    let networkClient: NetworkClientProtocol
+    private let networkClient: any NetworkClientProtocol
 
     var coins: [Coin] {
         get async throws {
@@ -38,7 +38,7 @@ final class CoinsService: CoinsServiceProtocol {
         }
     }
 
-    init(networkClient: NetworkClientProtocol) {
+    init(networkClient: any NetworkClientProtocol) {
         self.networkClient = networkClient
     }
 }

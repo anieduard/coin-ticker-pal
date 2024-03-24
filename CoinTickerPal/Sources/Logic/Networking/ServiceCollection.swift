@@ -8,27 +8,36 @@
 import Foundation
 
 final class ServiceCollection {
-    private var container: [String: AnyObject] = [:]
+    private var services: [ObjectIdentifier: Any]
 
-    private let networkClient: NetworkClientProtocol
-
-    init(networkClient: NetworkClientProtocol) {
-        self.networkClient = networkClient
+    init() {
+        services = [:]
     }
 
-    func resolve<S: Service>(type: S.Type) -> S {
-        let key = String(describing: type)
+    private init(services: [ObjectIdentifier : Any]) {
+        self.services = services
+    }
 
-        if let service = container[key] as? S {
-            return service
+    func register<S: Service>(_ factory: () -> S) -> ServiceCollection {
+        let key = ObjectIdentifier(S.self)
+        let service = factory()
+
+        services[key] = service
+
+        return .init(services: services)
+    }
+
+    func resolve<S: Service>(_ type: S.Type) -> S {
+        let key = ObjectIdentifier(type)
+
+        guard let service = services[key] as? S else {
+            fatalError("\(type) is not registered. You should register it beforehand.")
         }
 
-        let service = S(networkClient: networkClient)
-        container[key] = service
         return service
     }
 
     func resetAll() {
-        container = [:]
+        services = [:]
     }
 }

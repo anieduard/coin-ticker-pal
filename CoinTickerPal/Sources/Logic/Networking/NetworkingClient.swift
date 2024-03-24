@@ -8,20 +8,11 @@
 import Foundation
 
 protocol NetworkClientProtocol: AnyObject {
-    var baseURL: URLComponents { get }
-
     func load(_ request: URLRequest) async throws -> Data
     func load<T: Decodable>(_ request: URLRequest) async throws -> T
 }
 
 final class NetworkClient: NetworkClientProtocol {
-    private(set) lazy var baseURL: URLComponents = {
-        var components = URLComponents()
-        components.scheme = APIConstants.URL.scheme
-        components.host = APIConstants.URL.host
-        return components
-    }()
-
     private let session: URLSession
 
     private lazy var jsonDecoder: JSONDecoder = {

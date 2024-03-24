@@ -8,19 +8,17 @@
 import Foundation
 import class UIKit.UIImage
 
-protocol ImageServiceProtocol: Service {
+protocol ImageServiceProtocol: APIService {
     func image(for url: URL) async throws -> UIImage?
 }
 
 final class ImageService: ImageServiceProtocol {
-    let networkClient: NetworkClientProtocol
+    private let networkClient: any NetworkClientProtocol
+    private let imageCache: any ImageCacheProtocol
 
-    private let imageCache: ImageCacheProtocol
-
-    init(networkClient: NetworkClientProtocol) {
+    init(networkClient: any NetworkClientProtocol, imageCache: ImageCacheProtocol) {
         self.networkClient = networkClient
-        #warning("change this to be injectable")
-        self.imageCache = ImageCache()
+        self.imageCache = imageCache
     }
 
     func image(for url: URL) async throws -> UIImage? {

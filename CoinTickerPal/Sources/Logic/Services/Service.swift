@@ -7,15 +7,20 @@
 
 import Foundation
 
-protocol Service: AnyObject {
-    var networkClient: NetworkClientProtocol { get }
+protocol Service { }
 
-    init(networkClient: NetworkClientProtocol)
-}
+protocol APIService: Service { }
 
-extension Service {
+extension APIService {
+    private var baseURL: URLComponents {
+        var components = URLComponents()
+        components.scheme = APIConstants.URL.scheme
+        components.host = APIConstants.URL.host
+        return components
+    }
+
     private func url(for path: APIConstants.Path, queryItems: [URLQueryItem]? = nil) -> URL {
-        var components = networkClient.baseURL
+        var components = baseURL
         components.path = path.rawValue
         components.queryItems = queryItems
         guard let url = components.url else { fatalError("The URL couldn't be formed from the specified components: \(components).") }
