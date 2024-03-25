@@ -39,7 +39,7 @@ final class CoinsService: CoinsServiceProtocol {
 
 extension CoinsService {
     enum Response {
-        struct Coin: Decodable {
+        struct Coin: Decodable, Equatable {
             let symbol: String
             let bid: Double
             let bidSize: Double
@@ -53,7 +53,7 @@ extension CoinsService {
             let low: Double
         }
 
-        struct CurrencyLabel: Decodable {
+        struct CurrencyLabel: Decodable, Equatable {
             let symbol: String
             let name: String
         }

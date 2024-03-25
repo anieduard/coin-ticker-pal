@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 @MainActor
+// sourcery: AutoMockable
 protocol CoinsListViewModelDelegate: AnyObject {
     func didFailLoadingCoins(with error: Error, onRetry: Bool)
     func showNoInternetConnectionToast()
@@ -50,7 +51,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
         dataSourceSnapshot = DataSourceSnapshot()
         dataSourceSnapshot.appendSections([.coins])
-        dataSourceSnapshot.appendItems((0..<15).map { _ in .loading }, toSection: .coins)
+        dataSourceSnapshot.appendItems((0..<15).map { .loading($0) }, toSection: .coins)
 
         reachabilityService.startMonitoring()
         reachabilityService.hasActiveNetwork
@@ -141,18 +142,28 @@ extension CoinsListViewModel.Section {
     class Item: Hashable {
         var type: `Type`
 
-        private let id = UUID()
-
         init(type: `Type`) {
             self.type = type
         }
 
         func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
+            switch type {
+            case .loading(let id):
+                hasher.combine(id)
+            case .coin(let coin):
+                hasher.combine(coin.symbol)
+            }
         }
 
         static func == (lhs: Item, rhs: Item) -> Bool {
-            lhs.id == rhs.id
+            switch (lhs.type, rhs.type) {
+            case (.loading(let lhsId), .loading(let rhsId)):
+                return lhsId == rhsId
+            case (.coin(let lhsCoin), .coin(let rhsCoin)):
+                return lhsCoin == rhsCoin
+            default:
+                return false
+            }
         }
     }
 }
@@ -161,11 +172,11 @@ extension CoinsListViewModel.Section.Item {
     typealias Item = CoinsListViewModel.Section.Item
 
     enum `Type` {
-        case loading(UUID), coin(Coin)
+        case loading(Int), coin(Coin)
     }
 
-    static var loading: Item {
-        Item(type: .loading(UUID()))
+    static func loading(_ id: Int) -> Item {
+        Item(type: .loading(id))
     }
 
     static func coin(_ coin: Coin) -> Item {

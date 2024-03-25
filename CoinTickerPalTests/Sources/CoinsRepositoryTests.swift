@@ -10,7 +10,7 @@ import XCTest
 
 final class CoinsRepositoryTests: XCTestCase {
     var coinsService: CoinsServiceProtocolMock!
-    var coinsRepository: CoinsRepository!
+    var sut: CoinsRepository!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -66,11 +66,11 @@ final class CoinsRepositoryTests: XCTestCase {
         coinsService = CoinsServiceProtocolMock()
         coinsService.underlyingCoins = coinsResponse
         coinsService.underlyingCurrencyLabels = currencyLabelsResponse
-        coinsRepository = CoinsRepository(coinsService: coinsService)
+        sut = CoinsRepository(coinsService: coinsService)
     }
 
     func testRepositoryReturnsCorrectCoins() async throws {
-        let coins = try await coinsRepository.coins
+        let coins = try await sut.coins
         XCTAssertEqual(coins, [
             Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false),
             Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false),

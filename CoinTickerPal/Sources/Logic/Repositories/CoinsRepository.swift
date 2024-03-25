@@ -7,6 +7,7 @@
 
 import Foundation
 
+// sourcery: AutoMockable
 protocol CoinsRepositoryProtocol: Resolvable {
     var coins: [Coin] { get async throws }
 }

@@ -5,4 +5,4 @@ templates:
 output: ../Generated/AutoMockable.swift
 args:
     autoMockableTestableImports: ["CoinTickerPal"]
-    autoMockableImports: []
+    autoMockableImports: ["Combine"]

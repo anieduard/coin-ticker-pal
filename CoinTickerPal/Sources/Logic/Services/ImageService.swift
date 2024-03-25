@@ -8,6 +8,7 @@
 import Foundation
 import class UIKit.UIImage
 
+// sourcery: AutoMockable
 protocol ImageServiceProtocol: Service {
     func image(for url: URL) async throws -> UIImage?
 }

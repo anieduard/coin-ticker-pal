@@ -8,15 +8,16 @@
 import Combine
 import Network
 
+// sourcery: AutoMockable
 protocol ReachabilityServiceProtocol: Resolvable {
-    var hasActiveNetwork: Published<Bool>.Publisher { get }
+    var hasActiveNetwork: AnyPublisher<Bool, Never> { get }
 
     func startMonitoring()
     func stopMonitoring()
 }
 
 final class ReachabilityService: ReachabilityServiceProtocol {
-    var hasActiveNetwork: Published<Bool>.Publisher { $_hasActiveNetwork }
+    var hasActiveNetwork: AnyPublisher<Bool, Never> { $_hasActiveNetwork.eraseToAnyPublisher() }
 
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
