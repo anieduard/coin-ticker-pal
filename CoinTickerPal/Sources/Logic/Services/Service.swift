@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol Service { }
+protocol Resolvable { }
 
-protocol APIService: Service { }
+protocol Service: Resolvable { }
 
-extension APIService {
+extension Service {
     private var baseURL: URLComponents {
         var components = URLComponents()
         components.scheme = APIConstants.URL.scheme

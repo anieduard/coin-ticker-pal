@@ -30,7 +30,7 @@ protocol CoinsListViewModelProtocol: AnyObject {
 final class CoinsListViewModel: CoinsListViewModelProtocol {
     typealias DataSourceSnapshot = NSDiffableDataSourceSnapshot<Section, Section.Item>
 
-    private let coinsService: CoinsServiceProtocol
+    private let coinsRepository: CoinsRepositoryProtocol
     private let imageService: ImageServiceProtocol
     private unowned let delegate: CoinsListViewModelDelegate
 
@@ -41,12 +41,12 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     private var cancellables: Set<AnyCancellable> = []
 
-    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol, reachabilityService: ReachabilityServiceProtocol, delegate: CoinsListViewModelDelegate) {
-        self.coinsService = coinsService
+    init(coinsRepository: CoinsRepositoryProtocol, imageService: ImageServiceProtocol, reachabilityService: ReachabilityServiceProtocol, delegate: CoinsListViewModelDelegate) {
+        self.coinsRepository = coinsRepository
         self.imageService = imageService
         self.delegate = delegate
 
-        coinsPollingStream = AsyncPollingStream { try await coinsService.coins }
+        coinsPollingStream = AsyncPollingStream { try await coinsRepository.coins }
 
         dataSourceSnapshot = DataSourceSnapshot()
         dataSourceSnapshot.appendSections([.coins])
@@ -65,7 +65,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
 
     func loadCoins() async throws {
         do {
-            coins = try await coinsService.coins
+            coins = try await coinsRepository.coins
 
             dataSourceSnapshot.deleteSections([.coins])
             dataSourceSnapshot.appendSections([.coins])

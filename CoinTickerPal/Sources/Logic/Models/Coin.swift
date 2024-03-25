@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Coin {
+struct Coin: Equatable {
     let name: String
     let symbol: String
     let price: Double

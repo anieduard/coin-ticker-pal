@@ -18,7 +18,7 @@
 		10195DB22BAE46CF00127465 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DB12BAE46CF00127465 /* PaddingLabel.swift */; };
 		10195DB42BAE46EA00127465 /* UIEdgeInsets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */; };
 		10195DBD2BAECBD700127465 /* NetworkingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DBC2BAECBD700127465 /* NetworkingClient.swift */; };
-		10195DBF2BAECC1C00127465 /* ServiceCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DBE2BAECC1C00127465 /* ServiceCollection.swift */; };
+		10195DBF2BAECC1C00127465 /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DBE2BAECC1C00127465 /* Container.swift */; };
 		10195DC12BAECCBE00127465 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DC02BAECCBE00127465 /* Service.swift */; };
 		10195DC32BAECD6D00127465 /* CoinsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DC22BAECD6D00127465 /* CoinsService.swift */; };
 		10195DC52BAF415A00127465 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DC42BAF415A00127465 /* Coin.swift */; };
@@ -33,7 +33,8 @@
 		10A2DE602BB1796A002F1E08 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 10A2DE592BB17842002F1E08 /* AutoMockable.stencil */; };
 		10A2DE612BB1796E002F1E08 /* sourcery_automockable_config.yml in Resources */ = {isa = PBXBuildFile; fileRef = 10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */; };
 		10A2DE652BB17E5F002F1E08 /* AutoMockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE642BB17E5F002F1E08 /* AutoMockable.swift */; };
-		10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */; };
+		10A2DE682BB17FC9002F1E08 /* CoinsRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE672BB17FC9002F1E08 /* CoinsRepositoryTests.swift */; };
+		10A2DE6E2BB1A041002F1E08 /* CoinsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE6D2BB1A041002F1E08 /* CoinsRepository.swift */; };
 		10B027072BACBF54006EAF9A /* CoinTickerPalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */; };
 		10B027092BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */; };
 		10B23A712BACC71400B71064 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10B23A652BACC71400B71064 /* Assets.xcassets */; };
@@ -71,7 +72,7 @@
 		10195DB12BAE46CF00127465 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extension.swift"; sourceTree = "<group>"; };
 		10195DBC2BAECBD700127465 /* NetworkingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingClient.swift; sourceTree = "<group>"; };
-		10195DBE2BAECC1C00127465 /* ServiceCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCollection.swift; sourceTree = "<group>"; };
+		10195DBE2BAECC1C00127465 /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		10195DC02BAECCBE00127465 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		10195DC22BAECD6D00127465 /* CoinsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsService.swift; sourceTree = "<group>"; };
 		10195DC42BAF415A00127465 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
@@ -86,9 +87,10 @@
 		10A2DE592BB17842002F1E08 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 		10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = sourcery_automockable_config.yml; sourceTree = "<group>"; };
 		10A2DE642BB17E5F002F1E08 /* AutoMockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoMockable.swift; sourceTree = "<group>"; };
+		10A2DE672BB17FC9002F1E08 /* CoinsRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsRepositoryTests.swift; sourceTree = "<group>"; };
+		10A2DE6D2BB1A041002F1E08 /* CoinsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsRepository.swift; sourceTree = "<group>"; };
 		10B026E22BACBF51006EAF9A /* CoinTickerPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinTickerPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026F82BACBF54006EAF9A /* CoinTickerPalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalTests.swift; sourceTree = "<group>"; };
 		10B027022BACBF54006EAF9A /* CoinTickerPalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalUITests.swift; sourceTree = "<group>"; };
 		10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -170,9 +172,10 @@
 		10195DBA2BAECB8900127465 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
-				10195DBE2BAECC1C00127465 /* ServiceCollection.swift */,
+				10195DBE2BAECC1C00127465 /* Container.swift */,
 				10195DB82BAECB8900127465 /* Models */,
 				10195DBB2BAECBB800127465 /* Networking */,
+				10A2DE6C2BB1A02C002F1E08 /* Repositories */,
 				10195DB92BAECB8900127465 /* Services */,
 			);
 			path = Logic;
@@ -201,6 +204,22 @@
 				10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		10A2DE662BB17FBA002F1E08 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				10A2DE672BB17FC9002F1E08 /* CoinsRepositoryTests.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		10A2DE6C2BB1A02C002F1E08 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				10A2DE6D2BB1A041002F1E08 /* CoinsRepository.swift */,
+			);
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		10B026D92BACBF51006EAF9A = {
@@ -235,9 +254,9 @@
 		10B026FB2BACBF54006EAF9A /* CoinTickerPalTests */ = {
 			isa = PBXGroup;
 			children = (
+				10A2DE662BB17FBA002F1E08 /* Sources */,
 				10A2DE5F2BB17962002F1E08 /* Configuration */,
 				10A2DE5E2BB17962002F1E08 /* Generated */,
-				10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */,
 			);
 			path = CoinTickerPalTests;
 			sourceTree = "<group>";
@@ -451,12 +470,13 @@
 				10195DB02BAE28F400127465 /* CoinTableViewCell.swift in Sources */,
 				10195DC92BAF710200127465 /* ImageCache.swift in Sources */,
 				10195DA82BACD8CC00127465 /* ShimmerView.swift in Sources */,
+				10A2DE6E2BB1A041002F1E08 /* CoinsRepository.swift in Sources */,
 				10195DC12BAECCBE00127465 /* Service.swift in Sources */,
 				10A2DE562BB0F95A002F1E08 /* CoinsListErrorViewController.swift in Sources */,
 				10195DC72BAF70CC00127465 /* ImageService.swift in Sources */,
 				10195D9E2BACD25800127465 /* CoinsListCoordinator.swift in Sources */,
 				10195DCD2BB0416F00127465 /* ReachabilityService.swift in Sources */,
-				10195DBF2BAECC1C00127465 /* ServiceCollection.swift in Sources */,
+				10195DBF2BAECC1C00127465 /* Container.swift in Sources */,
 				10A2DE492BB0DFF2002F1E08 /* AsyncPollingStream.swift in Sources */,
 				10195DA02BACD4A600127465 /* CoinsListViewController.swift in Sources */,
 				10195DCB2BB0178800127465 /* ShimmerImageView.swift in Sources */,
@@ -472,7 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10A2DE652BB17E5F002F1E08 /* AutoMockable.swift in Sources */,
-				10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */,
+				10A2DE682BB17FC9002F1E08 /* CoinsRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

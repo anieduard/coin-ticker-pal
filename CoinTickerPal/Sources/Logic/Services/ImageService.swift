@@ -8,7 +8,7 @@
 import Foundation
 import class UIKit.UIImage
 
-protocol ImageServiceProtocol: APIService {
+protocol ImageServiceProtocol: Service {
     func image(for url: URL) async throws -> UIImage?
 }
 

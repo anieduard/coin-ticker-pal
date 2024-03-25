@@ -8,7 +8,7 @@
 import Combine
 import Network
 
-protocol ReachabilityServiceProtocol: Service {
+protocol ReachabilityServiceProtocol: Resolvable {
     var hasActiveNetwork: Published<Bool>.Publisher { get }
 
     func startMonitoring()

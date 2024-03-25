@@ -7,34 +7,28 @@
 
 import Foundation
 
-protocol CoinsServiceProtocol: APIService {
-    var coins: [Coin] { get async throws }
+// sourcery: AutoMockable
+protocol CoinsServiceProtocol: Service {
+    var coins: [CoinsService.Response.Coin] { get async throws }
+    var currencyLabels: [CoinsService.Response.CurrencyLabel] { get async throws }
 }
 
 final class CoinsService: CoinsServiceProtocol {
     private let networkClient: any NetworkClientProtocol
 
-    var coins: [Coin] {
+    var coins: [Response.Coin] {
         get async throws {
             let request = request(for: .tickers, queryItems: [.symbols])
-            let coins: [Response.Coin] = try await networkClient.load(request)
-            let currencyLabels = try await currencyLabels
-
-            return coins.compactMap { coin in
-                guard let name = currencyLabels[coin.symbol] else { return nil }
-                return Coin(name: name, symbol: coin.symbol, price: coin.lastPrice, priceChange: coin.dailyChangeRelative)
-            }
+            return try await networkClient.load(request)
         }
     }
 
-    private var currencyLabels: [String: String] {
+    var currencyLabels: [CoinsService.Response.CurrencyLabel] {
         get async throws {
             let request = request(for: .currencyLabel)
             let response: [[Response.CurrencyLabel]] = try await networkClient.load(request)
 
-            return response.flatMap { $0 }.reduce(into: [:]) { result, currencyLabel in
-                result[currencyLabel.symbol] = currencyLabel.name
-            }
+            return response.flatMap { $0 }
         }
     }
 
@@ -43,7 +37,7 @@ final class CoinsService: CoinsServiceProtocol {
     }
 }
 
-private extension CoinsService {
+extension CoinsService {
     enum Response {
         struct Coin: Decodable {
             let symbol: String
@@ -57,35 +51,39 @@ private extension CoinsService {
             let volume: Double
             let high: Double
             let low: Double
-
-            init(from decoder: Decoder) throws {
-                var container = try decoder.unkeyedContainer()
-
-                symbol = try container.decode(String.self).formatted
-                bid = try container.decode(Double.self)
-                bidSize = try container.decode(Double.self)
-                ask = try container.decode(Double.self)
-                askSize = try container.decode(Double.self)
-                dailyChange = try container.decode(Double.self)
-                dailyChangeRelative = try container.decode(Double.self)
-                lastPrice = try container.decode(Double.self)
-                volume = try container.decode(Double.self)
-                high = try container.decode(Double.self)
-                low = try container.decode(Double.self)
-            }
         }
 
         struct CurrencyLabel: Decodable {
             let symbol: String
             let name: String
-
-            init(from decoder: Decoder) throws {
-                var container = try decoder.unkeyedContainer()
-
-                symbol = try container.decode(String.self)
-                name = try container.decode(String.self)
-            }
         }
+    }
+}
+
+extension CoinsService.Response.Coin {
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+
+        symbol = try container.decode(String.self).formatted
+        bid = try container.decode(Double.self)
+        bidSize = try container.decode(Double.self)
+        ask = try container.decode(Double.self)
+        askSize = try container.decode(Double.self)
+        dailyChange = try container.decode(Double.self)
+        dailyChangeRelative = try container.decode(Double.self)
+        lastPrice = try container.decode(Double.self)
+        volume = try container.decode(Double.self)
+        high = try container.decode(Double.self)
+        low = try container.decode(Double.self)
+    }
+}
+
+extension CoinsService.Response.CurrencyLabel {
+    init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+
+        symbol = try container.decode(String.self)
+        name = try container.decode(String.self)
     }
 }
 

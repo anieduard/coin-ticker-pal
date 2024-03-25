@@ -13,7 +13,7 @@ final class CoinsListCoordinator: UIViewController {
         case error(Error)
     }
 
-    private let coinsService: CoinsServiceProtocol
+    private let coinsRepository: CoinsRepositoryProtocol
     private let imageService: ImageServiceProtocol
     private let reachabilityService: ReachabilityServiceProtocol
 
@@ -23,7 +23,7 @@ final class CoinsListCoordinator: UIViewController {
 
             switch (oldValue, state) {
             case (.none, .coins), (.error, .coins):
-                let viewModel = CoinsListViewModel(coinsService: coinsService, imageService: imageService, reachabilityService: reachabilityService, delegate: self)
+                let viewModel = CoinsListViewModel(coinsRepository: coinsRepository, imageService: imageService, reachabilityService: reachabilityService, delegate: self)
                 rootViewController = CoinsListViewController(viewModel: viewModel)
             case (.coins, .error):
                 rootViewController = CoinsListErrorViewController(delegate: self)
@@ -49,8 +49,8 @@ final class CoinsListCoordinator: UIViewController {
         }
     }
 
-    init(coinsService: CoinsServiceProtocol, imageService: ImageServiceProtocol, reachabilityService: ReachabilityServiceProtocol) {
-        self.coinsService = coinsService
+    init(coinsRepository: CoinsRepositoryProtocol, imageService: ImageServiceProtocol, reachabilityService: ReachabilityServiceProtocol) {
+        self.coinsRepository = coinsRepository
         self.imageService = imageService
         self.reachabilityService = reachabilityService
         super.init(nibName: nil, bundle: nil)
