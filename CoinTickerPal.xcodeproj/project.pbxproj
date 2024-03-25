@@ -30,6 +30,9 @@
 		10A2DE492BB0DFF2002F1E08 /* AsyncPollingStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */; };
 		10A2DE542BB0F6AD002F1E08 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */; };
 		10A2DE562BB0F95A002F1E08 /* CoinsListErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE552BB0F95A002F1E08 /* CoinsListErrorViewController.swift */; };
+		10A2DE602BB1796A002F1E08 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 10A2DE592BB17842002F1E08 /* AutoMockable.stencil */; };
+		10A2DE612BB1796E002F1E08 /* sourcery_automockable_config.yml in Resources */ = {isa = PBXBuildFile; fileRef = 10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */; };
+		10A2DE652BB17E5F002F1E08 /* AutoMockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE642BB17E5F002F1E08 /* AutoMockable.swift */; };
 		10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */; };
 		10B027072BACBF54006EAF9A /* CoinTickerPalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */; };
 		10B027092BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */; };
@@ -80,6 +83,9 @@
 		10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncPollingStream.swift; sourceTree = "<group>"; };
 		10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		10A2DE552BB0F95A002F1E08 /* CoinsListErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListErrorViewController.swift; sourceTree = "<group>"; };
+		10A2DE592BB17842002F1E08 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
+		10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = sourcery_automockable_config.yml; sourceTree = "<group>"; };
+		10A2DE642BB17E5F002F1E08 /* AutoMockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoMockable.swift; sourceTree = "<group>"; };
 		10B026E22BACBF51006EAF9A /* CoinTickerPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinTickerPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026F82BACBF54006EAF9A /* CoinTickerPalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalTests.swift; sourceTree = "<group>"; };
@@ -180,6 +186,23 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		10A2DE5E2BB17962002F1E08 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				10A2DE642BB17E5F002F1E08 /* AutoMockable.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
+		10A2DE5F2BB17962002F1E08 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				10A2DE592BB17842002F1E08 /* AutoMockable.stencil */,
+				10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
 		10B026D92BACBF51006EAF9A = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +235,8 @@
 		10B026FB2BACBF54006EAF9A /* CoinTickerPalTests */ = {
 			isa = PBXGroup;
 			children = (
+				10A2DE5F2BB17962002F1E08 /* Configuration */,
+				10A2DE5E2BB17962002F1E08 /* Generated */,
 				10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */,
 			);
 			path = CoinTickerPalTests;
@@ -367,6 +392,9 @@
 				Base,
 			);
 			mainGroup = 10B026D92BACBF51006EAF9A;
+			packageReferences = (
+				10A2DE572BB0FE10002F1E08 /* XCRemoteSwiftPackageReference "Sourcery" */,
+			);
 			productRefGroup = 10B026E32BACBF51006EAF9A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -392,6 +420,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10A2DE612BB1796E002F1E08 /* sourcery_automockable_config.yml in Resources */,
+				10A2DE602BB1796A002F1E08 /* AutoMockable.stencil in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10A2DE652BB17E5F002F1E08 /* AutoMockable.swift in Sources */,
 				10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -773,6 +804,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		10A2DE572BB0FE10002F1E08 /* XCRemoteSwiftPackageReference "Sourcery" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/Sourcery.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 10B026DA2BACBF51006EAF9A /* Project object */;
 }
