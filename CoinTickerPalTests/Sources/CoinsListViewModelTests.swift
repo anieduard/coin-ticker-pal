@@ -62,9 +62,9 @@ final class CoinsListViewModelTests: XCTestCase {
     @MainActor
     func testLoadCoinsSucceeds() async throws {
         let coins = [
-            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false),
-            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false),
-            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true)
+            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false, imageURL: nil),
+            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false, imageURL: nil),
+            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true, imageURL: nil)
         ]
         coinsRepository.underlyingCoins = coins
 
@@ -103,18 +103,36 @@ final class CoinsListViewModelTests: XCTestCase {
     }
 
     func testLoadImageSucceeds() async {
+        let coin = Coin(
+            name: "Bitcoin",
+            symbol: "BTC",
+            price: 66999.0,
+            priceChange: 0.02815972,
+            earnYield: false,
+            imageURL: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")
+        )
+
         let expectedImage = UIImage()
         imageService.imageForUrlURLUIImageReturnValue = expectedImage
 
-        let image = await sut.loadImage(for: URL(string: "www.google.com")!)
+        let image = await sut.loadImage(for: coin)
 
         XCTAssertEqual(image, expectedImage)
     }
 
     func testLoadImageFails() async {
+        let coin = Coin(
+            name: "Bitcoin",
+            symbol: "BTC",
+            price: 66999.0,
+            priceChange: 0.02815972,
+            earnYield: false,
+            imageURL: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")
+        )
+
         imageService.imageForUrlURLUIImageThrowableError = AnyError.just
 
-        let image = await sut.loadImage(for: URL(string: "www.google.com")!)
+        let image = await sut.loadImage(for: coin)
 
         XCTAssertEqual(image, nil)
     }
@@ -122,9 +140,9 @@ final class CoinsListViewModelTests: XCTestCase {
     @MainActor
     func testPolling() async throws {
         var coins = [
-            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false),
-            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false),
-            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true)
+            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false, imageURL: nil),
+            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false, imageURL: nil),
+            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true, imageURL: nil)
         ]
         coinsRepository.underlyingCoins = coins
 
@@ -136,9 +154,9 @@ final class CoinsListViewModelTests: XCTestCase {
 
         // polling
         coins = [
-            Coin(name: "Bitcoin", symbol: "BTC", price: 67999.0, priceChange: 0.03815972, earnYield: false),
-            Coin(name: "Ethereum", symbol: "ETH", price: 3551.5, priceChange: 0.0305198, earnYield: false),
-            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.2334, priceChange: 0.07452522, earnYield: true)
+            Coin(name: "Bitcoin", symbol: "BTC", price: 67999.0, priceChange: 0.03815972, earnYield: false, imageURL: nil),
+            Coin(name: "Ethereum", symbol: "ETH", price: 3551.5, priceChange: 0.0305198, earnYield: false, imageURL: nil),
+            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.2334, priceChange: 0.07452522, earnYield: true, imageURL: nil)
         ]
         coinsRepository.underlyingCoins = coins
 
@@ -154,9 +172,9 @@ final class CoinsListViewModelTests: XCTestCase {
     @MainActor
     func testSearch() async throws {
         let coins = [
-            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false),
-            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false),
-            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true)
+            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false, imageURL: nil),
+            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false, imageURL: nil),
+            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true, imageURL: nil)
         ]
         coinsRepository.underlyingCoins = coins
 

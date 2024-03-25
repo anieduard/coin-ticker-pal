@@ -72,9 +72,30 @@ final class CoinsRepositoryTests: XCTestCase {
     func testRepositoryReturnsCorrectCoins() async throws {
         let coins = try await sut.coins
         XCTAssertEqual(coins, [
-            Coin(name: "Bitcoin", symbol: "BTC", price: 66999.0, priceChange: 0.02815972, earnYield: false),
-            Coin(name: "Ethereum", symbol: "ETH", price: 3451.5, priceChange: 0.0205198, earnYield: false),
-            Coin(name: "OCEAN protocol", symbol: "OCEAN", price: 1.1334, priceChange: 0.06452522, earnYield: true)
+            Coin(
+                name: "Bitcoin",
+                symbol: "BTC",
+                price: 66999.0,
+                priceChange: 0.02815972,
+                earnYield: false,
+                imageURL: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")
+            ),
+            Coin(
+                name: "Ethereum",
+                symbol: "ETH",
+                price: 3451.5,
+                priceChange: 0.0205198,
+                earnYield: false,
+                imageURL: URL(string: "https://assets.coingecko.com/coins/images/279/small/ethereum.png?1696501628")
+            ),
+            Coin(
+                name: "OCEAN protocol",
+                symbol: "OCEAN",
+                price: 1.1334,
+                priceChange: 0.06452522,
+                earnYield: true,
+                imageURL: URL(string: "https://assets.coingecko.com/coins/images/3687/small/ocean-protocol-logo.jpg?1696504363")
+            )
         ])
     }
 }
