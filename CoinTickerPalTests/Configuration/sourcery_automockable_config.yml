@@ -1,0 +1,8 @@
+sources:
+    - ../../CoinTickerPal/Sources
+templates:
+    - AutoMockable.stencil
+output: ../Generated/AutoMockable.swift
+args:
+    autoMockableTestableImports: ["CoinTickerPal"]
+    autoMockableImports: ["Combine"]
