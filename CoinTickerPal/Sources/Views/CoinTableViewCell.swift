@@ -15,8 +15,6 @@ final class CoinTableViewCell: UITableViewCell {
 
                 // Resize images so we don't get huge image sizes that would affect scrolling performance.
                 avatarImageView.image = image?.resize(to: CGSize(width: .imageSize, height: .imageSize))
-
-                earnYiedLabel.backgroundColor = image?.dominantColor
             }
 
             nameLabel.text = item?.name
@@ -102,6 +100,7 @@ final class CoinTableViewCell: UITableViewCell {
 
     private lazy var earnYiedLabel: PaddingLabel = {
         let label = PaddingLabel()
+        label.backgroundColor = .systemGreen
         label.text = "EARN YIELD"
         label.textColor = .systemBackground
         label.font = .systemFont(ofSize: UIFont.smallSystemFontSize)

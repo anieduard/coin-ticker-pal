@@ -21,7 +21,7 @@ protocol CoinsListViewModelProtocol: AnyObject {
     var dataSourceSnapshot: CoinsListViewModel.DataSourceSnapshot { get }
 
     func loadCoins() async throws
-    func loadImage(for url: URL) async -> UIImage?
+    func loadImage(for coin: Coin) async -> UIImage?
 
     func startPolling() -> AsyncStream<Void>
 
@@ -79,8 +79,9 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
         }
     }
 
-    func loadImage(for url: URL) async -> UIImage? {
-        try? await imageService.image(for: url)
+    func loadImage(for coin: Coin) async -> UIImage? {
+        guard let url = coin.imageURL else { return nil }
+        return try? await imageService.image(for: url)
     }
 
     func startPolling() -> AsyncStream<Void> {

@@ -28,7 +28,6 @@
 		10195DCD2BB0416F00127465 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCC2BB0416F00127465 /* ReachabilityService.swift */; };
 		10195DCF2BB0614B00127465 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCE2BB0614B00127465 /* Toast.swift */; };
 		10A2DE492BB0DFF2002F1E08 /* AsyncPollingStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */; };
-		10A2DE542BB0F6AD002F1E08 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */; };
 		10A2DE562BB0F95A002F1E08 /* CoinsListErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE552BB0F95A002F1E08 /* CoinsListErrorViewController.swift */; };
 		10A2DE602BB1796A002F1E08 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = 10A2DE592BB17842002F1E08 /* AutoMockable.stencil */; };
 		10A2DE612BB1796E002F1E08 /* sourcery_automockable_config.yml in Resources */ = {isa = PBXBuildFile; fileRef = 10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */; };
@@ -84,7 +83,6 @@
 		10195DCC2BB0416F00127465 /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		10195DCE2BB0614B00127465 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncPollingStream.swift; sourceTree = "<group>"; };
-		10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		10A2DE552BB0F95A002F1E08 /* CoinsListErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinsListErrorViewController.swift; sourceTree = "<group>"; };
 		10A2DE592BB17842002F1E08 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 		10A2DE5A2BB17842002F1E08 /* sourcery_automockable_config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = sourcery_automockable_config.yml; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */,
-				10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */,
 				10195DAA2BACD9B700127465 /* UITableView+Extension.swift */,
 				10195DAC2BACDF3900127465 /* UIView+Extension.swift */,
 				10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */,
@@ -467,7 +464,6 @@
 				10195DC52BAF415A00127465 /* Coin.swift in Sources */,
 				10195DBD2BAECBD700127465 /* NetworkingClient.swift in Sources */,
 				10195DB42BAE46EA00127465 /* UIEdgeInsets+Extension.swift in Sources */,
-				10A2DE542BB0F6AD002F1E08 /* UIImage+Extension.swift in Sources */,
 				10B23A732BACC71400B71064 /* AppDelegate.swift in Sources */,
 				10195DA22BACD59B00127465 /* CoinsListViewModel.swift in Sources */,
 				10195DC32BAECD6D00127465 /* CoinsService.swift in Sources */,

@@ -13,4 +13,5 @@ struct Coin: Equatable {
     let price: Double
     let priceChange: Double
     let earnYield: Bool
+    let imageURL: URL?
 }

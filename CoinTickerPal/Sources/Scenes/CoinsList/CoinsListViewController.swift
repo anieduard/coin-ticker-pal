@@ -26,7 +26,7 @@ final class CoinsListViewController: UIViewController {
                 let cell: CoinTableViewCell = tableView.dequeueReusableCell(for: indexPath)
 
                 let image: () async -> UIImage? = { [self] in
-                    await viewModel.loadImage(for: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")!)
+                    await viewModel.loadImage(for: coin)
                 }
 
                 cell.item = .from(coin, image: image)
