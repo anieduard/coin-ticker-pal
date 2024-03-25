@@ -27,6 +27,10 @@ extension APIService {
         return url
     }
 
+    func request(for url: URL) -> URLRequest {
+        URLRequest(url: url)
+    }
+
     func request(for path: APIConstants.Path, queryItems: [URLQueryItem]? = nil) -> URLRequest {
         let url = url(for: path, queryItems: queryItems)
         return URLRequest(url: url)

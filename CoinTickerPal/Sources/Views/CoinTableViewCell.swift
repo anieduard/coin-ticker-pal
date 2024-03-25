@@ -10,25 +10,25 @@ import UIKit
 final class CoinTableViewCell: UITableViewCell {
     var item: Item? {
         didSet {
-            Task {
+            imageTask = Task {
                 let image = await item?.image()
 
                 // Resize images so we don't get huge image sizes that would affect scrolling performance.
                 avatarImageView.image = image?.resize(to: CGSize(width: .imageSize, height: .imageSize))
+
+                earnYiedLabel.backgroundColor = image?.dominantColor
             }
 
             nameLabel.text = item?.name
             priceLabel.text = item?.price
 
-            earnYiedLabel.isHidden = item?.earnYield ?? true
+            earnYiedLabel.isHidden = !(item?.earnYield ?? false)
             symbolLabel.text = item?.symbol
 
             priceChangeLabel.text = item?.priceChange.value
             priceChangeLabel.textColor = item?.priceChange.color
         }
     }
-
-    var reuseClosure: (() -> Void)?
 
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -105,7 +105,6 @@ final class CoinTableViewCell: UITableViewCell {
     private lazy var earnYiedLabel: PaddingLabel = {
         let label = PaddingLabel()
         label.text = "EARN YIELD"
-        label.backgroundColor = .red
         label.textColor = .systemBackground
         label.font = .systemFont(ofSize: UIFont.smallSystemFontSize)
         label.layer.cornerRadius = 4
@@ -126,6 +125,8 @@ final class CoinTableViewCell: UITableViewCell {
         label.font = .systemFont(ofSize: UIFont.systemFontSize)
         return label
     }()
+
+    private var imageTask: Task<Void, Never>?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -166,7 +167,7 @@ final class CoinTableViewCell: UITableViewCell {
 
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
 
@@ -182,9 +183,7 @@ final class CoinTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
-        reuseClosure?()
-        avatarImageView.image = nil
+        imageTask?.cancel()
     }
 
     override func layoutSubviews() {
@@ -221,7 +220,7 @@ extension CoinTableViewCell {
         let symbol: String
         let priceChange: PriceChange
 
-        static func from(_ coin: Coin, image: @escaping () async -> UIImage?, earnYield: Bool) -> Self {
+        static func from(_ coin: Coin, image: @escaping () async -> UIImage?) -> Self {
             let price = coin.price.formatted(.currency(code: "USD").presentation(.narrow))
             let priceChange = PriceChange(value: coin.priceChange)
 
@@ -229,7 +228,7 @@ extension CoinTableViewCell {
                 image: image,
                 name: coin.name,
                 price: price,
-                earnYield: earnYield,
+                earnYield: coin.earnYield,
                 symbol: coin.symbol,
                 priceChange: priceChange
             )

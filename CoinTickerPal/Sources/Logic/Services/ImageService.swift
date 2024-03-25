@@ -26,8 +26,7 @@ final class ImageService: ImageServiceProtocol {
             return image
         }
 
-        let request = URLRequest(url: url)
-
+        let request = request(for: url)
         let data = try await networkClient.load(request)
 
         guard let image = UIImage(data: data) else { return nil }

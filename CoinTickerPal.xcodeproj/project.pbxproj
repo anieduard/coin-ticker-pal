@@ -28,6 +28,7 @@
 		10195DCD2BB0416F00127465 /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCC2BB0416F00127465 /* ReachabilityService.swift */; };
 		10195DCF2BB0614B00127465 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10195DCE2BB0614B00127465 /* Toast.swift */; };
 		10A2DE492BB0DFF2002F1E08 /* AsyncPollingStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */; };
+		10A2DE542BB0F6AD002F1E08 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */; };
 		10B026FD2BACBF54006EAF9A /* CoinTickerPalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */; };
 		10B027072BACBF54006EAF9A /* CoinTickerPalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027062BACBF54006EAF9A /* CoinTickerPalUITests.swift */; };
 		10B027092BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B027082BACBF54006EAF9A /* CoinTickerPalUITestsLaunchTests.swift */; };
@@ -76,6 +77,7 @@
 		10195DCC2BB0416F00127465 /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		10195DCE2BB0614B00127465 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncPollingStream.swift; sourceTree = "<group>"; };
+		10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		10B026E22BACBF51006EAF9A /* CoinTickerPal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoinTickerPal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026F82BACBF54006EAF9A /* CoinTickerPalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoinTickerPalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10B026FC2BACBF54006EAF9A /* CoinTickerPalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTickerPalTests.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				10A2DE482BB0DFF2002F1E08 /* AsyncPollingStream.swift */,
+				10A2DE532BB0F6AD002F1E08 /* UIImage+Extension.swift */,
 				10195DAA2BACD9B700127465 /* UITableView+Extension.swift */,
 				10195DAC2BACDF3900127465 /* UIView+Extension.swift */,
 				10195DB32BAE46EA00127465 /* UIEdgeInsets+Extension.swift */,
@@ -406,6 +409,7 @@
 				10195DC52BAF415A00127465 /* Coin.swift in Sources */,
 				10195DBD2BAECBD700127465 /* NetworkingClient.swift in Sources */,
 				10195DB42BAE46EA00127465 /* UIEdgeInsets+Extension.swift in Sources */,
+				10A2DE542BB0F6AD002F1E08 /* UIImage+Extension.swift in Sources */,
 				10B23A732BACC71400B71064 /* AppDelegate.swift in Sources */,
 				10195DA22BACD59B00127465 /* CoinsListViewModel.swift in Sources */,
 				10195DC32BAECD6D00127465 /* CoinsService.swift in Sources */,

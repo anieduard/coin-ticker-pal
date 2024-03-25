@@ -25,27 +25,17 @@ final class CoinsListViewController: UIViewController {
             case .coin(let coin):
                 let cell: CoinTableViewCell = tableView.dequeueReusableCell(for: indexPath)
 
-                let task = Task<UIImage?, Never> {
-//                    if Bool.random() { return nil }
-//                    try? await Task.sleep(nanoseconds: UInt64(Int.random(in: 0...3) * 1_000_000_000))
-                    return await self.viewModel.loadImage(for: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")!)
+                let image: () async -> UIImage? = { [self] in
+                    await viewModel.loadImage(for: URL(string: "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400")!)
                 }
 
-                cell.reuseClosure = {
-                    task.cancel()
-                }
-
-                cell.item = .from(
-                    coin,
-                    image: { await task.value },
-                    earnYield: Bool.random()
-                )
+                cell.item = .from(coin, image: image)
 
                 return cell
             }
         }
 
-        dataSource.defaultRowAnimation = .fade
+        dataSource.defaultRowAnimation = .none
 
         return dataSource
     }()
@@ -91,7 +81,7 @@ final class CoinsListViewController: UIViewController {
         initView()
 
         // Apply data source with loading cells.
-        dataSource.apply(viewModel.dataSourceSnapshot)
+        dataSource.apply(viewModel.dataSourceSnapshot, animatingDifferences: false)
 
         // Refresh data with coin cells.
         Task {
@@ -100,7 +90,7 @@ final class CoinsListViewController: UIViewController {
                 try await viewModel.loadCoins()
                 tableView.isScrollEnabled = true
 
-                dataSource.apply(viewModel.dataSourceSnapshot) { [weak self] in
+                dataSource.apply(viewModel.dataSourceSnapshot, animatingDifferences: false) { [weak self] in
                     self?.startPolling()
                 }
             }
@@ -134,7 +124,7 @@ final class CoinsListViewController: UIViewController {
         Task {
             // Start polling and update data every time.
             for await _ in viewModel.startPolling() {
-                dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+                dataSource.apply(viewModel.dataSourceSnapshot, animatingDifferences: false, completion: nil)
             }
         }
     }
@@ -145,7 +135,7 @@ final class CoinsListViewController: UIViewController {
                 try await viewModel.loadCoins()
 
                 tableView.refreshControl?.endRefreshing()
-                dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+                dataSource.apply(viewModel.dataSourceSnapshot, animatingDifferences: false, completion: nil)
             } catch {
                 tableView.refreshControl?.endRefreshing()
             }
@@ -174,8 +164,20 @@ extension CoinsListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         refreshControl = searchController.isActive ? .none : .active
 
-        viewModel.searchCoins(text: searchController.searchBar.text)
+        let shouldReload = viewModel.searchCoins(text: searchController.searchBar.text)
+        guard shouldReload else { return }
 
-        dataSource.apply(viewModel.dataSourceSnapshot, completion: nil)
+        dataSource.apply(viewModel.dataSourceSnapshot, animatingDifferences: false)
+
+        let isEmpty = viewModel.dataSourceSnapshot.numberOfItems == 0
+        tableView.backgroundView = isEmpty ? .emptyImageView : nil
     }
+}
+
+private extension UIView {
+    static var emptyImageView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "illustration_empty.png"))
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
 }

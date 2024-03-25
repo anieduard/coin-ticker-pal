@@ -12,4 +12,5 @@ struct Coin {
     let symbol: String
     let price: Double
     let priceChange: Double
+    let earnYield: Bool
 }

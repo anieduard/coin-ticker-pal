@@ -24,7 +24,7 @@ protocol CoinsListViewModelProtocol: AnyObject {
 
     func startPolling() -> AsyncStream<Void>
 
-    func searchCoins(text: String?)
+    func searchCoins(text: String?) -> Bool
 }
 
 final class CoinsListViewModel: CoinsListViewModelProtocol {
@@ -89,12 +89,12 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
                     switch result {
                     case .success(let coins):
                         for coin in coins {
-                            guard let index = dataSourceSnapshot.itemIdentifiers.firstIndex(where: { itemIdentifier in
-                                guard case .coin(let coin) = itemIdentifier.type else { return false }
-                                return coin.symbol == coin.symbol
-                            }) else { continue }
+                            let item = dataSourceSnapshot.itemIdentifiers.first(where: { itemIdentifier in
+                                guard case .coin(let coinItem) = itemIdentifier.type else { return false }
+                                return coin.symbol == coinItem.symbol
+                            })
 
-                            dataSourceSnapshot.itemIdentifiers[index].type = .coin(coin)
+                            item?.type = .coin(coin)
                         }
 
                         dataSourceSnapshot.reloadItems(dataSourceSnapshot.itemIdentifiers)
@@ -108,7 +108,7 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
         }
     }
 
-    func searchCoins(text: String?) {
+    func searchCoins(text: String?) -> Bool {
         let coins: [Coin]
 
         if let text, !text.isEmpty {
@@ -119,11 +119,15 @@ final class CoinsListViewModel: CoinsListViewModelProtocol {
             coins = self.coins
         }
 
+        let items: [Section.Item] = coins.map { .coin($0) }
+        guard items != dataSourceSnapshot.itemIdentifiers else { return false }
+
         dataSourceSnapshot.deleteSections([.coins])
         dataSourceSnapshot.appendSections([.coins])
 
-        let items: [Section.Item] = coins.map { .coin($0) }
         dataSourceSnapshot.appendItems(items, toSection: .coins)
+
+        return true
     }
 }
 
@@ -135,8 +139,9 @@ extension CoinsListViewModel {
 
 extension CoinsListViewModel.Section {
     class Item: Hashable {
-        let id = UUID()
         var type: `Type`
+
+        private let id = UUID()
 
         init(type: `Type`) {
             self.type = type
@@ -156,10 +161,12 @@ extension CoinsListViewModel.Section.Item {
     typealias Item = CoinsListViewModel.Section.Item
 
     enum `Type` {
-        case loading, coin(Coin)
+        case loading(UUID), coin(Coin)
     }
 
-    static var loading: Item { Item(type: .loading) }
+    static var loading: Item {
+        Item(type: .loading(UUID()))
+    }
 
     static func coin(_ coin: Coin) -> Item {
         Item(type: .coin(coin))
