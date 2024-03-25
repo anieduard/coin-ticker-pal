@@ -45,9 +45,7 @@ final class CoinTableViewCell: UITableViewCell {
     private lazy var containerStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fill
         stackView.spacing = 16
         return stackView
     }()

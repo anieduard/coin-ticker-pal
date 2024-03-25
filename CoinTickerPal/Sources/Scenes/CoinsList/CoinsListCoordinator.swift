@@ -26,7 +26,7 @@ final class CoinsListCoordinator: UIViewController {
                 let viewModel = CoinsListViewModel(coinsService: coinsService, imageService: imageService, reachabilityService: reachabilityService, delegate: self)
                 rootViewController = CoinsListViewController(viewModel: viewModel)
             case (.coins, .error):
-                rootViewController = .init()
+                rootViewController = CoinsListErrorViewController(delegate: self)
             default:
                 fatalError("Unexpected state change, oldValue: \(String(describing: oldValue)), newValue: \(String(describing: state))")
             }
@@ -64,6 +64,8 @@ final class CoinsListCoordinator: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .systemBackground
+
         state = .coins
     }
 }
@@ -81,5 +83,13 @@ extension CoinsListCoordinator: CoinsListViewModelDelegate {
 
     func showNoInternetConnectionToast() {
         Toast.presentError("No internet connection available. Please connect to the internet.")
+    }
+}
+
+// MARK: - CoinsListErrorViewControllerDelegate
+
+extension CoinsListCoordinator: CoinsListErrorViewControllerDelegate {
+    func didTapRetry() {
+        state = .coins
     }
 }
