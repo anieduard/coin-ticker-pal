@@ -5,8 +5,8 @@ Simple coin tickers app that shows name, symbol, last price and relative day cha
 This mini project makes use of `async / await` and `Combine` in order to get a list of available tickers and map them to their coresponding symbol. A polling mechanism is implemented using `AsyncStream` in order to refresh the data every 5 seconds, the list being updated using `Diffable Data Source`.
 
 ## Remaining
-- improve image loading mechanism (currently Bitfinex doesn't return image URLs for coins, so the URLs are hardcoded for the sake of simplicity to simulate an image loading mechanism
-- use new APIs for displaying cells (UIContentConfiguration, etc.)
+- improve image loading mechanism (currently Bitfinex doesn't return image URLs for coins, so the URLs are hardcoded for the sake of simplicity to simulate an image loading mechanism)
+- use new available APIs for displaying cells (UIContentConfiguration, etc.)
 - improve networking layer
 - finish remaining tests
 
